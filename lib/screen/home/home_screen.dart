@@ -1,35 +1,43 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:henna_hand/models/category_model.dart';
 import 'package:henna_hand/models/henna_model.dart';
+import 'package:henna_hand/models/item_model.dart';
 import 'package:henna_hand/screen/category/category_screen.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class HomeScreen extends StatelessWidget {
+import 'component/home_category_listview.dart';
+import 'component/home_item_listView.dart';
+import 'component/my_drawer.dart';
+
+class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
-  /* List<Map<String, dynamic>> items = [
-    {'name': 'Hand Front', 'img': 'assets/images/palm.png'},
-    {'name': 'Hand Back', 'img': 'assets/images/palm.png'},
-    {'name': 'Fingure', 'img': ''},
-  ]; */
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(.9),
+      drawer: MyDrawer(),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.green.shade900,
         elevation: 0,
         centerTitle: true,
-        leading: Icon(
-          Icons.menu,
-          color: Colors.black45,
-        ),
         title: Text(
           'Henna hand',
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle(color: Colors.white),
         ),
         actions: [
           Icon(
             Icons.search,
-            color: Colors.black45,
+            color: Colors.white,
           ),
           SizedBox(width: 10),
         ],
@@ -38,88 +46,14 @@ class HomeScreen extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CategoryScreen(
-                          category: categories[index],
-                        ),
-                      ));
-                },
-                child: Container(
-                  margin: EdgeInsets.only(
-                    bottom: 10,
-                    top: 5,
-                  ),
-                  alignment: Alignment.bottomCenter,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(categories[index].cataImg),
-                        fit: BoxFit.cover),
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.4),
-                        spreadRadius: 5,
-                        blurRadius: 2,
-                        offset: Offset(5, 4), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.5),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
-                      ),
-                    ),
-                    width: double.infinity,
-                    child: Text(
-                      categories[index].cataTitle,
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              separatorBuilder: (context, index) => SizedBox(
-                width: 20,
-              ),
-              itemCount: categories.length,
-            ),
+            child: HomeCategoryListView(),
           ),
-          SizedBox(
+          /* SizedBox(
             height: 20,
-          ),
+          ), */
           Expanded(
-            flex: 3,
-            child: ListView.builder(
-              itemCount: henna_list.length,
-              itemBuilder: (context, index) => Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    color: Colors.green,
-                    child: Image(
-                      image: NetworkImage(henna_list[index].img),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            flex: 4,
+            child: HomeItemLIstView(),
           ),
         ],
       ),
