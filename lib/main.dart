@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:henna_hand/models/introduction_screen.dart';
+import 'package:henna_hand/screen/home/home_screen.dart';
 import 'package:henna_hand/screen/splash/splash_screen.dart';
 
 void main() {
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(),
+      home: IntroScreen(),
     );
   }
 }

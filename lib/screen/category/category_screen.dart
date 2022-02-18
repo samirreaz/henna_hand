@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:henna_hand/models/category_model.dart';
 import 'package:henna_hand/models/henna_model.dart';
 import 'package:henna_hand/models/item_model.dart';
+import 'package:henna_hand/screen/detail/details_screen.dart';
 
 class CategoryScreen extends StatefulWidget {
   CategoryScreen({Key? key, required this.category}) : super(key: key);
@@ -28,27 +29,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
         title: Text(widget.category.cataTitle),
       ),
       body: ListView.builder(
-        itemCount: henna_list.length,
+        itemCount: filtered.length,
         itemBuilder: (context, index) => Stack(
           children: [
-            Container(
-              margin: EdgeInsets.all(8),
-              height: MediaQuery.of(context).size.height * 0.3,
-              decoration: BoxDecoration(
-                  color: Colors.green,
-                  image: DecorationImage(
-                    image: NetworkImage(henna_list[index].img),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black38,
-                      spreadRadius: 3,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailsScreen(
+                              hennaData: henna_list[index],
+                            )));
+              },
+              child: Container(
+                margin: EdgeInsets.all(8),
+                height: MediaQuery.of(context).size.height * 0.3,
+                decoration: BoxDecoration(
+                    color: Colors.green,
+                    image: DecorationImage(
+                      image: NetworkImage(filtered[index].itemImage),
+                      fit: BoxFit.cover,
                     ),
-                  ]),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black38,
+                        spreadRadius: 3,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ]),
+              ),
             ),
             Positioned(
               right: 15,
